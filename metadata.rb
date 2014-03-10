@@ -4,7 +4,7 @@ maintainer  "Sport Ngin"
 license     "MIT"
 version     "0.0.1"
 
-depends "dependencies"
+depends "gem_support"
 depends "puma"
 depends "nginx"
 depends "deploy"
