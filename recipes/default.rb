@@ -9,7 +9,7 @@ include_recipe "nginx"
 
 node[:deploy].each do |application, deploy|
   puma_config application do
-    directory
+    directory deploy[:deploy_to]
     environment deploy[:rails_env]
     logrotate node[:puma][:logrotate]
     thread_min node[:puma][:thread_min]
