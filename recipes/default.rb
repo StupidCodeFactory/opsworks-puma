@@ -11,7 +11,6 @@ node[:deploy].each do |application, deploy|
   puma_config application do
     directory
     environment deploy[:rails_env]
-    monit node[:puma][:monit]
     logrotate node[:puma][:logrotate]
     thread_min node[:puma][:thread_min]
     thread_max node[:puma][:thread_min]

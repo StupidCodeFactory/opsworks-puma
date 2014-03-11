@@ -2,8 +2,8 @@ define :puma_config, :owner => nil, :group => nil, :directory  => nil, :puma_dir
                      :environment => "production", :daemonize => false, :pidfile => nil, :config_path => nil, :state_path => nil,
                      :stdout_redirect => nil, :stderr_redirect => nil, :output_append => false,
                      :quiet => false, :thread_min => 0, :thread_max => 16, :bind => nil, :control_app_bind => nil,
-                     :workers => 0, :activate_control_app => true, :monit => true, :logrotate => true, :exec_prefix => nil,
-                     :monit_timeout => 10, :config_source => nil, :config_cookbook => nil, :init_file => nil,
+                     :workers => 0, :activate_control_app => true, :logrotate => true, :exec_prefix => nil,
+                     :config_source => nil, :config_cookbook => nil, :init_file => nil,
                      :preload_app => false, :on_worker_boot => nil do
 
   # Set defaults if not supplied by caller.
