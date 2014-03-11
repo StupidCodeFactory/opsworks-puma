@@ -9,7 +9,7 @@ define :puma_config, :owner => nil, :group => nil, :directory  => nil, :puma_dir
   # Set defaults if not supplied by caller.
   # Working directory of rails app (where config.ru is)
   unless params[:directory]
-    params[:directory] = "/srv/apps/#{params[:name]}"
+    params[:directory] = "/srv/www/#{params[:name]}"
   end
 
   unless params[:working_dir]

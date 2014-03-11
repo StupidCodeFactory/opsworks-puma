@@ -5,13 +5,15 @@ ruby_block "ensure only our unicorn version is installed by deinstalling any oth
 end
 
 
-puma_config application do
-  directory
-  environment deploy[:rails_env]
-  monit node[:puma][:monit]
-  logrotate node[:puma][:logrotate]
-  thread_min node[:puma][:thread_min]
-  thread_max node[:puma][:thread_min]
-  workers node[:puma][:workers]
+node[:deploy].each do |application, deploy|
+  puma_config application do
+    directory
+    environment deploy[:rails_env]
+    monit node[:puma][:monit]
+    logrotate node[:puma][:logrotate]
+    thread_min node[:puma][:thread_min]
+    thread_max node[:puma][:thread_min]
+    workers node[:puma][:workers]
+  end
 end
 
