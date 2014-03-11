@@ -4,6 +4,8 @@ ruby_block "ensure only our unicorn version is installed by deinstalling any oth
   end
 end
 
+include_recipe "nginx"
+
 
 node[:deploy].each do |application, deploy|
   puma_config application do
