@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Kill process
+if [ -e  <%= @pidfile %> ];
+then
+  kill -9 $(cat  <%= @pidfile %>)
+fi
+
+
+# Cleanup sockets/state
+rm -f <%= @pidfile %>
+rm -f <%= @state_path %>
+<% if @bind.downcase.include?("unix") %>
+rm -f <%= @bind.gsub!("unix://", "") %>
+<% end %>
+<% if @control_app_bind.downcase.include?("unix") %>
+rm -f <%= @control_app_bind.gsub!("unix://", "") %>
+<% end %>
