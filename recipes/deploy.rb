@@ -7,9 +7,8 @@ node[:deploy].each do |application, deploy|
     group deploy[:group]
     path deploy[:deploy_to]
   end
-
   puma_web_app do
     application application
     deploy deploy
-  end
+  end if deploy[:puma]
 end
