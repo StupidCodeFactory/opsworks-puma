@@ -1,9 +1,9 @@
 define :puma_config, :owner => nil, :group => nil, :directory  => nil, :puma_directory => nil, :working_dir => nil, :rackup => nil,
                      :environment => "production", :daemonize => false, :pidfile => nil, :config_path => nil, :state_path => nil,
-                     :stdout_redirect => nil, :stderr_redirect => nil, :output_append => false,
+                     :stdout_redirect => nil, :stderr_redirect => nil, :output_append => true,
                      :quiet => false, :thread_min => 0, :thread_max => 16, :bind => nil, :control_app_bind => nil,
                      :workers => 0, :activate_control_app => true, :logrotate => true, :exec_prefix => nil,
-                     :config_source => nil, :config_cookbook => nil, :init_file => nil,
+                     :config_source => nil, :config_cookbook => nil,
                      :preload_app => false, :on_worker_boot => nil do
 
   # Set defaults if not supplied by caller.
@@ -41,11 +41,11 @@ define :puma_config, :owner => nil, :group => nil, :directory  => nil, :puma_dir
   end
 
   unless params[:stdout_redirect]
-    params[:stdout_redirect] = "#{params[:puma_directory]}/stdout.log"
+    params[:stdout_redirect] = "#{params[:working_dir]}/log/puma.log"
   end
 
   unless params[:stderr_redirect]
-    params[:stderr_redirect] = "#{params[:puma_directory]}/stderr.log"
+    params[:stderr_redirect] = "#{params[:working_dir]}/log/puma-error.log"
   end
 
   unless params[:exec_prefix]
@@ -58,10 +58,6 @@ define :puma_config, :owner => nil, :group => nil, :directory  => nil, :puma_dir
 
   unless params[:config_cookbook]
     params[:config_cookbook] = "opsworks-puma"
-  end
-
-  if params[:init_file]
-    params[:init_command] = "test -f #{params[:init_file]} && source #{params[:init_file]} ; "
   end
 
   # Create app working directory with owner/group if specified
