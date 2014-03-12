@@ -2,6 +2,7 @@ define :puma_web_app do
   deploy = params[:deploy]
   application = params[:application]
 
+
   nginx_web_app deploy[:application] do
     docroot deploy[:absolute_document_root]
     server_name deploy[:domains].first
@@ -13,5 +14,9 @@ define :puma_web_app do
     deploy deploy
     template "nginx_puma_web_app.erb"
     application deploy
+  end
+
+  service "#{application}-puma" do
+    action :restart
   end
 end
