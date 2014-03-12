@@ -117,6 +117,16 @@ define :puma_config, :owner => nil, :group => nil, :directory  => nil, :puma_dir
     variables params
   end
 
+  template "#{params[:name]}-puma" do
+    source "init.d.sh.erb"
+    path "/etc/init.d/#{params[:name]}-puma"
+    cookbook "opsworks-puma"
+    mode "0755"
+    owner params[:owner] if params[:owner]
+    group params[:group] if params[:group]
+    variables params
+  end
+
   if params[:logrotate]
     logrotate_app puma_params[:name] do
       cookbook "logrotate"

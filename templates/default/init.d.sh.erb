@@ -1,0 +1,56 @@
+#!/bin/sh
+
+#
+# chkconfig: 35 99 99
+# description: For the puma app in <%= @app_directory %>
+
+# load some init.d helper functions
+. /etc/rc.d/init.d/functions
+
+APPNAME="<%= @name %>"
+USERNAME="<%= @owner %>"
+APP_DIR="<%= @working_dir %>"
+
+PUMA_DIR="$APP_DIR/shared/puma"
+PIDFILE="$APP_DIR/shared/pids/$APPNAME.pid"
+STARTUP="$PUMA_DIR/puma_start.sh"
+cleanup() {
+  rm -f $PUMA_DIR/$APPNAME*.{pid,state,sock}
+}
+
+start() {
+  echo -n "Starting $APPNAME"
+  daemon --user $USERNAME --pidfile $PIDFILE $STARTUP && success || failure
+}
+
+stop() {
+  echo -n "Shutting down $APPNAME"
+  killproc -p $PIDFILE puma && cleanup && success || failure
+}
+
+restart() {
+  echo -n "Hot Restarting $APPNAME"
+  killproc -p $PIDFILE puma -USR1 && success || failure
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    restart
+  hard-restart)
+    stop
+    start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|hard-restart}"
+    exit 2
+esac
+
+exit $?
+
+# vim: set filetype=sh :
