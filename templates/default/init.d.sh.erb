@@ -19,18 +19,23 @@ cleanup() {
 }
 
 start() {
-  echo -n "Starting $APPNAME"
+  echo -n "Starting $APPNAME.."
   daemon --user $USERNAME --pidfile $PIDFILE $STARTUP && success || failure
 }
 
 stop() {
-  echo -n "Shutting down $APPNAME"
+  echo -n "Shutting down $APPNAME.."
   killproc -p $PIDFILE puma && cleanup && success || failure
 }
 
 restart() {
-  echo -n "Hot Restarting $APPNAME"
-  killproc -p $PIDFILE puma -USR1 && success || failure
+  if [ -e $PIDFILE ]; then
+    echo -n "Hot Restarting $APPNAME"
+    killproc -p $PIDFILE puma -USR1 && success || failure
+  else
+    echo "$APPNAME isn't running.."
+    start
+  fi
 }
 
 case "$1" in
@@ -42,12 +47,13 @@ case "$1" in
     ;;
   restart)
     restart
+    ;;
   hard-restart)
     stop
     start
     ;;
   *)
-    echo "Usage: $0 {start|stop|hard-restart}"
+    echo "Usage: $0 {start|stop|restart|hard-restart}"
     exit 2
 esac
 
