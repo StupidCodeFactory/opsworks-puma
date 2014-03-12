@@ -2,14 +2,14 @@
 
 #
 # chkconfig: 35 99 99
-# description: For the puma app in <%= @app_directory %>
+# description: For the puma app in <%= @working_dir %>
 
 # load some init.d helper functions
 . /etc/rc.d/init.d/functions
 
 APPNAME="<%= @name %>"
 USERNAME="<%= @owner %>"
-APP_DIR="<%= @working_dir %>"
+APP_DIR="<%= @directory %>"
 
 PUMA_DIR="$APP_DIR/shared/puma"
 PIDFILE="$APP_DIR/shared/pids/$APPNAME.pid"
