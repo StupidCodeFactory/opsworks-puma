@@ -1,5 +1,5 @@
 upstream puma_<%= @application[:domains].first %> {
-server unix:<%= @application[:deploy_to]%>/shared/sockets/<%= @application_name %>.sock fail_timeout=0;
+server unix:///<%= @application[:deploy_to]%>/shared/sockets/puma/<%= @application_name %>.sock fail_timeout=0;
 }
 
 server {
