@@ -37,7 +37,7 @@ define :puma_config, :owner => 'root', :group => 'root', :directory  => nil, :pu
   end
 
   unless params[:pidfile]
-    params[:pidfile] = "#{params[:puma_directory]}/#{params[:name]}.pid"
+    params[:pidfile] = "#{params[:directory]}/shared/pids/#{params[:name]}.pid"
   end
 
   unless params[:stdout_redirect]
@@ -45,7 +45,7 @@ define :puma_config, :owner => 'root', :group => 'root', :directory  => nil, :pu
   end
 
   unless params[:stderr_redirect]
-    params[:stderr_redirect] = "#{params[:working_dir]}/log/puma-error.log"
+    params[:stderr_redirect] = "#{params[:working_dir]}/log/puma.error.log"
   end
 
   unless params[:exec_prefix]
