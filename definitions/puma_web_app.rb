@@ -10,6 +10,8 @@ define :puma_web_app do
     rails_env deploy[:rails_env]
     mounted_at deploy[:mounted_at]
     ssl_certificate_ca deploy[:ssl_certificate_ca]
+    http_port deploy[:http_port] || 80
+    ssl_port deploy[:ssl_port] || 443
     cookbook "opsworks-puma"
     deploy deploy
     template "nginx_puma_web_app.erb"

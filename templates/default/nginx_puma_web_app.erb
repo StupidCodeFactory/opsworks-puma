@@ -3,7 +3,7 @@ server unix://<%= @application[:deploy_to]%>/shared/puma/<%= @application_name %
 }
 
 server {
-  listen 80;
+  listen <%= @params[:http_port] %>;
   server_name <%= @application[:domains].join(" ") %> <%= node[:hostname] %>;
   access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>.access.log;
 
@@ -41,9 +41,9 @@ server {
   }
 }
 
-<% if @application[:ssl_support] %>
+<% if @params[:ssl_support] %>
 server {
-  listen   443;
+  listen <%= @application[:ssl_port] %>;
   server_name <%= @application[:domains].join(" ") %> <%= node[:hostname] %>;
   access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>-ssl.access.log;
 
