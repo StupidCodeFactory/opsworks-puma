@@ -87,9 +87,19 @@ define :puma_config, :owner => 'root', :group => 'root', :directory  => nil, :pu
     variables params
   end
 
-  template "#{params[:name]}-puma" do
+  template "puma_restart.sh" do
+    source "puma_restart.sh.erb"
+    path "#{params[:puma_directory]}/puma_restart.sh"
+    cookbook "opsworks-puma"
+    mode "0755"
+    owner params[:owner] if params[:owner]
+    group params[:group] if params[:group]
+    variables params
+  end
+
+  template "#{params[:name]}" do
     source "init.d.sh.erb"
-    path "/etc/init.d/#{params[:name]}-puma"
+    path "/etc/init.d/#{params[:name]}"
     cookbook "opsworks-puma"
     mode "0755"
     owner params[:owner] if params[:owner]
