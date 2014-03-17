@@ -77,39 +77,9 @@ define :puma_config, :owner => 'root', :group => 'root', :directory  => nil, :pu
     variables params
   end
 
-  template "puma_kill.sh" do
-    source "puma_kill.sh.erb"
-    path "#{params[:puma_directory]}/puma_kill.sh"
-    cookbook "opsworks-puma"
-    mode "0755"
-    owner params[:owner] if params[:owner]
-    group params[:group] if params[:group]
-    variables params
-  end
-
   template "puma_start.sh" do
     source "puma_start.sh.erb"
     path "#{params[:puma_directory]}/puma_start.sh"
-    cookbook "opsworks-puma"
-    mode "0755"
-    owner params[:owner] if params[:owner]
-    group params[:group] if params[:group]
-    variables params
-  end
-
-  template "puma_phased_restart.sh" do
-    source "puma_phased_restart.sh.erb"
-    path "#{params[:puma_directory]}/puma_phased_restart.sh"
-    cookbook "opsworks-puma"
-    mode "0755"
-    owner params[:owner] if params[:owner]
-    group params[:group] if params[:group]
-    variables params
-  end
-
-  template "puma_restart.sh" do
-    source "puma_restart.sh.erb"
-    path "#{params[:puma_directory]}/puma_restart.sh"
     cookbook "opsworks-puma"
     mode "0755"
     owner params[:owner] if params[:owner]
