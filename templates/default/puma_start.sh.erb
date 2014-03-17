@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-/bin/su - <%= @owner %> -c '<%= @init_command %>cd <%= @working_dir %> && <%= @exec_prefix %> puma -C <%= @config_path %>'
+<%= @init_command %>cd <%= @working_dir %> && <%= @exec_prefix %> puma -C <%= @config_path %>
