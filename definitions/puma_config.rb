@@ -1,5 +1,5 @@
 define :puma_config, :owner => 'root', :group => 'root', :directory  => nil, :puma_directory => nil, :working_dir => nil, :rackup => nil,
-                     :environment => "production", :daemonize => false, :pidfile => nil, :config_path => nil, :state_path => nil,
+                     :environment => "production", :daemonize => true, :pidfile => nil, :config_path => nil, :state_path => nil,
                      :stdout_redirect => nil, :stderr_redirect => nil, :output_append => true,
                      :quiet => false, :thread_min => 0, :thread_max => 16, :bind => nil, :control_app_bind => nil,
                      :workers => 0, :activate_control_app => true, :logrotate => true, :exec_prefix => nil,
