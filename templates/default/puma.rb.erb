@@ -24,6 +24,7 @@ rackup "<%= @rackup %>"
   preload_app!
 <% end %>
 
+prune_bundler <%= @prune_bundler %>
 # Set the environment in which the rack's app will run. The value must be a string.
 # The default is "development".
 environment "<%= @environment %>"
