@@ -60,6 +60,9 @@ define :puma_config, :owner => 'deploy', :group => 'nginx', :directory  => nil, 
     params[:config_cookbook] = "opsworks-puma"
   end
 
+  user params[:owner]
+  group params[:group]
+
   # Create app working directory with owner/group if specified
   directory params[:puma_directory] do
     recursive true
