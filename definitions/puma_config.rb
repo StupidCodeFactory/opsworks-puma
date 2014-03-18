@@ -6,59 +6,20 @@ define :puma_config, :owner => 'deploy', :group => 'nginx', :directory  => nil, 
                      :config_source => nil, :config_cookbook => nil,
                      :preload_app => false, :prune_bundler => true, :on_worker_boot => nil do
 
-  # Set defaults if not supplied by caller.
-  # Working directory of rails app (where config.ru is)
-  unless params[:directory]
-    params[:directory] = "/srv/www/#{params[:name]}"
-  end
-
-  unless params[:working_dir]
-    params[:working_dir] = "#{params[:directory]}/current"
-  end
-
-  unless params[:puma_directory]
-    params[:puma_directory] = "#{params[:directory]}/shared/puma"
-  end
-
-  unless params[:config_path]
-    params[:config_path] = "#{params[:puma_directory]}/#{params[:name]}.config"
-  end
-
-  unless params[:state_path]
-    params[:state_path] = "#{params[:puma_directory]}/#{params[:name]}.state"
-  end
-
-  unless params[:bind]
-    params[:bind] = "unix://#{params[:puma_directory]}/#{params[:name]}.sock"
-  end
-
-  unless params[:control_app_bind]
-    params[:control_app_bind] = "unix://#{params[:puma_directory]}/#{params[:name]}_control.sock"
-  end
-
-  unless params[:pidfile]
-    params[:pidfile] = "#{params[:directory]}/shared/pids/#{params[:name]}.pid"
-  end
-
-  unless params[:stdout_redirect]
-    params[:stdout_redirect] = "#{params[:working_dir]}/log/puma.log"
-  end
-
-  unless params[:stderr_redirect]
-    params[:stderr_redirect] = "#{params[:working_dir]}/log/puma.error.log"
-  end
-
-  unless params[:exec_prefix]
-    params[:exec_prefix] = "bundle exec"
-  end
-
-  unless params[:config_source]
-    params[:config_source] = "puma.rb.erb"
-  end
-
-  unless params[:config_cookbook]
-    params[:config_cookbook] = "opsworks-puma"
-  end
+  params[:directory] ||= "/srv/www/#{params[:name]}"
+  params[:working_dir] ||= "#{params[:directory]}/current"
+  params[:puma_directory] ||= "#{params[:directory]}/shared/puma"
+  params[:config_path] ||= "#{params[:puma_directory]}/#{params[:name]}.config"
+  params[:state_path] ||= "#{params[:puma_directory]}/#{params[:name]}.state"
+  params[:bind] ||= "unix://#{params[:puma_directory]}/#{params[:name]}.sock"
+  params[:control_app_bind] ||= "unix://#{params[:puma_directory]}/#{params[:name]}_control.sock"
+  params[:pidfile] ||= "#{params[:directory]}/shared/pids/#{params[:name]}.pid"
+  params[:stdout_redirect] ||= "#{params[:working_dir]}/log/puma.log"
+  params[:stderr_redirect] ||= "#{params[:working_dir]}/log/puma.error.log"
+  params[:bin_path] ||= "/usr/local/bin/puma"
+  params[:exec_prefix] ||= "bundle exec"
+  params[:config_source] ||= "puma.rb.erb"
+  params[:config_cookbook] ||= "opsworks-puma"
 
   user params[:owner]
   group params[:group]
