@@ -18,7 +18,7 @@ define :puma_web_app do
     application deploy
   end
 
-  service "#{application}-puma" do
+  service application do
     action :restart
   end
 end
