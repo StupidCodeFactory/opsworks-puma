@@ -8,7 +8,6 @@
 . /etc/rc.d/init.d/functions
 
 APPNAME="<%= @name %>"
-USERNAME="<%= @owner %>"
 APP_DIR="<%= @directory %>"
 
 PUMA_DIR="$APP_DIR/shared/puma"
@@ -20,7 +19,7 @@ cleanup() {
 
 start() {
   echo -n "Starting $APPNAME.."
-  daemon --user $USERNAME --pidfile $PIDFILE $STARTUP && success || failure
+  daemon --pidfile $PIDFILE $STARTUP && success || failure
 }
 
 stop() {
