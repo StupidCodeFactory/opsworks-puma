@@ -30,7 +30,7 @@ define :puma_config, :owner => 'deploy', :group => 'nginx', :directory  => nil, 
     not_if do
       existing_usernames = []
       Etc.passwd {|user| existing_usernames << user['name']}
-      existing_usernames.include?(deploy[:user])
+      existing_usernames.include?(params[:owner])
     end
   end
 
