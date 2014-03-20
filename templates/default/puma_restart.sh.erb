@@ -1,2 +1,16 @@
 #!/usr/bin/env bash
-/etc/init.d/<%= @name %> restart
+. /etc/rc.d/init.d/functions
+
+APPNAME="<%= @name %>"
+APP_DIR="<%= @directory %>"
+
+PUMA_DIR="$APP_DIR/shared/puma"
+PIDFILE="$APP_DIR/shared/pids/$APPNAME.pid"
+
+if [ -e $PIDFILE ]; then
+  echo -n "Hot Restarting $APPNAME"
+  kill -USR1 $(cat $PIDFILE) && success || failure
+else
+  echo "$APPNAME isn't running.."
+  ./puma_start.sh
+fi
