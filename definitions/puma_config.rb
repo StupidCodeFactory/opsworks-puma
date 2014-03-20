@@ -21,8 +21,18 @@ define :puma_config, :owner => 'deploy', :group => 'nginx', :directory  => nil, 
   params[:config_source] ||= "puma.rb.erb"
   params[:config_cookbook] ||= "opsworks-puma"
 
-  user params[:owner]
   group params[:group]
+
+  user params[:owner] do
+    action :create
+    comment "deploy user"
+    gid params[:group]
+    not_if do
+      existing_usernames = []
+      Etc.passwd {|user| existing_usernames << user['name']}
+      existing_usernames.include?(deploy[:user])
+    end
+  end
 
   # Create app working directory with owner/group if specified
   directory params[:puma_directory] do
