@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+. /etc/rc.d/init.d/functions
+
+APPNAME="<%= @name %>"
+APP_DIR="<%= @directory %>"
+
+PUMA_DIR="$APP_DIR/shared/puma"
+PIDFILE="$APP_DIR/shared/pids/$APPNAME.pid"
+
+cleanup() {
+  rm -f $PUMA_DIR/$APPNAME*.{pid,state,sock}
+}
+
+# Kill process
+if [ -e  $PIDFILE ]; then
+  echo -n "Shutting down $APPNAME.."
+  kill $(cat $PIDFILE) && cleanup && success || failure
+else
+  echo "$APPNAME is not running"
+fi
