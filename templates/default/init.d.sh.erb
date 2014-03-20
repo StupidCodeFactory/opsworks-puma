@@ -18,15 +18,15 @@ STOP="$PUMA_DIR/puma_stop.sh"
 RESTART="$PUMA_DIR/puma_restart.sh"
 
 start() {
-  daemon --user $USERNAME --pidfile $PIDFILE $STARTUP && success || failure
+  daemon --user $USERNAME --pidfile $PIDFILE $START && success || failure
 }
 
 stop() {
-  $(STOP)
+  $STOP
 }
 
 restart() {
-  $(RESTART)
+  $RESTART
 }
 
 case "$1" in
