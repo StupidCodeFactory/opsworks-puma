@@ -9,32 +9,24 @@
 
 APPNAME="<%= @name %>"
 APP_DIR="<%= @directory %>"
+USERNAME="<%= @owner %>"
 
 PUMA_DIR="$APP_DIR/shared/puma"
 PIDFILE="$APP_DIR/shared/pids/$APPNAME.pid"
-STARTUP="$PUMA_DIR/puma_start.sh"
-cleanup() {
-  rm -f $PUMA_DIR/$APPNAME*.{pid,state,sock}
-}
+START="$PUMA_DIR/puma_start.sh"
+STOP="$PUMA_DIR/puma_stop.sh"
+RESTART="$PUMA_DIR/puma_restart.sh"
 
 start() {
-  echo -n "Starting $APPNAME.."
-  daemon --pidfile $PIDFILE $STARTUP && success || failure
+  daemon --user $USERNAME --pidfile $PIDFILE $STARTUP && success || failure
 }
 
 stop() {
-  echo -n "Shutting down $APPNAME.."
-  killproc -p $PIDFILE puma && cleanup && success || failure
+  $(STOP)
 }
 
 restart() {
-  if [ -e $PIDFILE ]; then
-    echo -n "Hot Restarting $APPNAME"
-    killproc -p $PIDFILE puma -USR1 && success || failure
-  else
-    echo "$APPNAME isn't running.."
-    start
-  fi
+  $(RESTART)
 }
 
 case "$1" in
