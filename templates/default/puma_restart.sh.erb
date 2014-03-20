@@ -12,5 +12,5 @@ if [ -e $PIDFILE ]; then
   kill -USR1 $(cat $PIDFILE) && success || failure
 else
   echo "$APPNAME isn't running.."
-  $(PUMA_DIR/puma_start.sh)
+  $($PUMA_DIR/puma_start.sh)
 fi
